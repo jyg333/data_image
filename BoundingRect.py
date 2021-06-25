@@ -22,3 +22,27 @@ img_2 = cv2.rectangle(img_1,(x,y),(x+w,y+h),(0,0,255),3) #사각형 바운딩을
 
 plt.imshow(cv2.cvtColor(img_2,cv2.COLOR_BGR2RGB))
 plt.show()
+
+
+"""convexhull"""
+contour = contours[0]
+hull = cv2.convexHull(contour) #여러개의 벡터를 외곽으로 하는 다각형을 찾는 알고리즘을 활용
+img_3 = cv2.drawContours(img_2,[hull],-1,(0,0,255),4)
+
+plt.imshow(cv2.cvtColor(img_2,cv2.COLOR_BGR2RGB))
+plt.show()
+"""approxPoly"""
+contour = contours[0]
+epsilon = 0.001 * cv2.arcLength(contour,True) #해당 contour값으로 길이 유추, epsilon값을 줄이게 되면 더 완전한 형태의 contour
+approx = cv2.approxPolyDP(contour,epsilon,True)
+img_4 = cv2.drawContours(img_3,[approx],-1,(0,255,0),4)
+
+plt.imshow(cv2.cvtColor(img,cv2.COLOR_BGR2RGB))
+plt.show()
+
+"""Area, Length, Moment"""
+contour = contours[0]
+area = cv2.contourArea(contour)
+Length = cv2.arcLength(contour,True)
+Moment = cv2.moments(contour)
+print(area,'\n', Length,'\n', Moment)
